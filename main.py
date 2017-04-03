@@ -15,7 +15,9 @@ ydl_opts = {
 
 def get_video(video_url, download=False):
   with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    return ydl.extract_info(video_url, force_generic_extractor=False, download=download)
+    info = ydl.extract_info(video_url, force_generic_extractor=False, download=download)
+    info['url'] = ydl.prepare_filename(info)
+    return info
 
 @app.route("/")
 def hello():
