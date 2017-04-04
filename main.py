@@ -11,14 +11,25 @@ app = Flask(__name__)
 ydl_opts = {
   'format': 'bestaudio/best',
   'outtmpl': '/music/%(title)s-%(id)s.%(ext)s',
+  'ignoreerrors': True,
 }
+
+def prepare_filename(ydl, info):
+  info['url'] = ydl.prepare_filename(info)
+  return info
+
+def add_filename(ydl, info):
+  if info['_type'] is "playlist":
+    info['entries'] = [prepare_filename(ydl, entry) for entry in info['entries'] if entry != None]
+  else:
+    info['url'] = ydl.prepare_filename(info)
 
 def get_video(video_url, download=False, filename=False):
   with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     info = ydl.extract_info(video_url, force_generic_extractor=False, download=download)
 
     if download or filename:
-      info['url'] = ydl.prepare_filename(info)
+      add_filename(ydl, info)
 
     return info
 
