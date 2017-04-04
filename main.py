@@ -19,7 +19,7 @@ def prepare_filename(ydl, info):
   return info
 
 def add_filename(ydl, info):
-  if info['_type'] is "playlist":
+  if '_type' in info and info['_type'] is "playlist":
     info['entries'] = [prepare_filename(ydl, entry) for entry in info['entries'] if entry != None]
   else:
     info['url'] = ydl.prepare_filename(info)
