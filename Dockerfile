@@ -12,4 +12,4 @@ COPY . /usr/src/app
 
 ENV FLASK_APP main.py
 EXPOSE 5000
-ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["uwsgi", "--callable", "app", "--die-on-term", "--http", "0.0.0.0:5000", "--file", "main.py", "--master"]
