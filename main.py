@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 from flask import Flask, jsonify, request
 import youtube_dl
 
-VIDEO_PREFIX = 'https://youtube.com/watch?v='
-
 app = Flask(__name__)
 
 ydl_opts = {
@@ -50,4 +48,3 @@ def video_download():
 
 if __name__ == "__main__":
   app.run()
-
