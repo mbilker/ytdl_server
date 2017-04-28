@@ -8,6 +8,9 @@ WORKDIR /usr/src/app
 COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY 0001-youtube-extractor-new-html5-player.patch /usr/src/app/
+RUN patch -p0 -i 0001-youtube-extractor-new-html5-player.patch
+
 COPY . /usr/src/app
 
 ENV FLASK_APP main.py
